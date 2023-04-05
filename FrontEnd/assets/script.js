@@ -1,12 +1,13 @@
 let portfolioUrl = 'http://localhost:5678/api/works';
-let portfolios;
+// let portfolios;
 
 //récuperer des galerie depuis backend
 fetch(portfolioUrl) 
     .then(reponse => reponse.json())
     .then(portfolios => {
 
-    showPortfolio(portfolios)
+    showPortfolio(portfolios);
+    filterPortfolio(portfolios);
     });
 
 function showPortfolio(datas){
@@ -29,22 +30,29 @@ function showPortfolio(datas){
         //rattacher figureElement à la galleryElement
         galleryContainer[0].appendChild(figureElement);
     };
-
-
-    //gestion des boutons filtres
-
-    let buttonFilter = document.querySelector('.btn-filter')
-
-    buttonFilter.addEventListener("click",function(){
-        let objetFilter = datas.filter(function(objet){
-            return datas.name = objet;
-        });
-        console.log(objetFilter);
-        });
-
-
-
 }
+
+
+    //gestion des filtres
+        function filterPortfolio(datasCategories){ 
+        let buttonFilter = document.querySelector('.btn-filter');
+
+        buttonFilter.addEventListener('click',e => {
+            let filterClass = e.target.className;
+            if(filterClass === "filter-objets"){
+                let objetsFilters = datasCategories.filter(function(category){
+                    return category.name === "Objets";  
+                })
+                console.log(objetsFilters);
+            };
+        }) 
+       
+    };
+    
+
+   
+       
+
 
 
 
