@@ -22,19 +22,19 @@ window.onload = function () {
         })
       })
       .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      
-      if (data.error) {
-        alert("Erreur dans l’identifiant ou le mot de passe");
-      } else {
-        window.open(
-          "index.html"
-        ); 
-      }
-    })
-    .catch((err) => {
-      console.log(err);
+      .then((data) => {
+        console.log(data);
+        
+        if (data.error) {
+          alert("Erreur dans l’identifiant ou le mot de passe");
+        } else {
+          window.open(
+            "index.html"
+          ); 
+        }
+        })
+        .catch((err) => {
+        console.log(err);
     });
 
       

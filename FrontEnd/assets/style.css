@@ -147,40 +147,35 @@ li:hover {
 
 }
 
-.btn-filter {
+.btn-filters {
 	display: inline-block;
 	width: 100%;
 	text-align: center;
 	height: auto;
 }
-.filter-all {
+
+.btn-filter {
 	font-family: 'Syne';
     font-weight: 700;
     font-size: 16px;
     padding: 10px;
-    color: white;
-    background-color: #1D6154;
     margin: 2em auto;
-    width: 100px;
     text-align: center;
     border-radius: 60px;
-    border: none;
-	overflow: hidden;
+	width: auto;
 }
 
-.filter-objets, .filter-appart, .filter-hotels {
-	font-family: 'Syne';
-    font-weight: 700;
-    font-size: 16px;
-    padding: 10px;
-    color: #1D6154;
+.white-bgrd-btn { 
+	color: #1D6154;
 	background-color: white;
-    margin: 2em auto;
-    text-align: center;
-    border-radius: 60px;
-    border: 1px solid #1D6154;
-	overflow: hidden;
+	border: 1px solid #1D6154;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+.green-bgrd-btn {
+	background-color: #1D6154;
+	color: white;
+	border: none;
 }
 
 #contact {
