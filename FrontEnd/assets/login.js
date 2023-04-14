@@ -13,7 +13,7 @@ window.onload = function () {
       method: 'POST',
       headers: {
         Accept: "application/json",
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         email: eMail,
@@ -30,7 +30,9 @@ window.onload = function () {
           hideMessageError();
         }, 5000);
       } else {
-        window.open("index.html"); 
+        //enregistrer le token
+        localStorage.setItem('isLogin',"true")
+        window.location.replace("index.html"); 
       }
     });
   });

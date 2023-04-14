@@ -57,7 +57,7 @@ header {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	/*margin: 50px 0*/
+	/* margin: 50px 0 */
 }
 .login-header {
 	display: flex;
@@ -97,7 +97,7 @@ h2{
 	color: #1D6154
 }
 
-#menu-edit {
+.menu-edit {
 	font-weight: 500;
 	font-size: 16px;
 	background-color: black;
@@ -106,23 +106,21 @@ h2{
 	display: none;
 }
 
-#menu-edit span {
-	font-family: 'works', sans-serif;
+.menu-edit span {
+	font-family: 'work', sans-serif;
 	color: white;
 	padding-right: 10px;
 	display: none;
 }
 
-#menu-edit span i {
-	width: 16px;
-	height: 16px;
+.menu-edit span i {
+	font-size: 16px;
 	padding-right: 10px;
-	display: none;
 }
 
 .btn-edit {
-	display: inline-block;
-	font-family: 'works',sans-serif;
+	display :none;
+	font-family: 'work',sans-serif;
     font-weight: 500;
     font-size: 14px;
     padding: 10px;
@@ -130,22 +128,15 @@ h2{
 	color: black;
 	border: 1px solid black;
 	border-radius: 60px;
-	width: auto;
 	cursor: pointer;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 	text-align: center;
-	height: auto;
-	display: none;
 }
 
 nav ul {
 	display: flex;
 	align-items: center;
 	list-style-type: none;
-}
-
-nav li:hover {
-	font-weight: bold;
 }
 
 nav li {
@@ -158,12 +149,13 @@ nav a {
 	text-decoration: none;
 }
 
-.logout {
+nav .logout {
 	display: none;
 }
 
-li:hover {
+nav li:hover {
 	color: #B1663C;
+	font-weight: bold;
 }
 
 #introduction {
@@ -181,11 +173,16 @@ li:hover {
 }
 
 #introduction span {
+	font-size: 16px;
 	position: relative;
 	top: 20px;
 	left: 52px;
 	display: none;;
 	cursor: pointer;
+}
+
+#introduction span i {
+	padding-right: 10px;
 }
 
 #introduction article {
@@ -208,8 +205,17 @@ li:hover {
 }
 
 #portfolio p {
-	display: inline-block;
+	text-align: center;
+	font-size: 16px;
+	position: relative;
+	bottom: 51px;
+	left: 14%;
 	cursor: pointer;
+	display: none;
+}
+
+#portfolio p i {
+	padding-right: 10px;
 }
 
 .gallery {

@@ -14,21 +14,30 @@
 <body>
 
 <header>
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-	<nav>
-		<ul>
-			<li><a href="#projets">projets</a></li>
-			<li><a href="#contact">contact</a></li>
-			<li><a href="login.html">login</a></li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-		</ul>
-	</nav>
+	<article>
+		<div class="menu-edit edit-mode-actif" >
+			<span class="edit-mode-actif"><i class="fa-regular fa-pen-to-square"></i>Mode d'édition</br>
+			<button class="btn-edit edit-mode-actif">publier les changements</button>		
+		</div>
+	</article>
+	<article class="article-edit">
+		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+		<nav>
+			<ul>
+				<li><a href="#projet">projets</a></li>
+				<li><a href="#contact">contact</a></li>
+				<li class="edit-mode-actif"><a href="login.html">login</a></li>
+				<li class="edit-mode-actif"><a class="logout" href="login.html">logout</a></li>
+				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			</ul>
+		</nav>
+	</article>
 </header>
 <main>
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
-			<span><i class="fa-regular fa-pen-to-square"></i>modifier</span>
+			<span class="edit-mode-actif"><i class="fa-regular fa-pen-to-square"></i>modifier</span>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -39,11 +48,12 @@
 	</section>
 	<section id="portfolio">
 		<h2 id="projets">Mes Projets</h2>
-		<div class="btn-filters">
-			<button class="btn-filter" data-filter="filter-all">Tous</button>
-			<button class="btn-filter" data-filter="filter-objets">Objets</button>
-			<button class="btn-filter" data-filter="filter-appart">Appartements</button>
-			<button class="btn-filter" data-filter="filter-hotels">Hôtels & restaurants</button>	
+		<p class="edit-mode-actif"><i class="fa-regular fa-pen-to-square"></i>modifier</p>
+		<div class="btn-filters edit-mode-actif">
+			<button class="btn-filter" data-filter="all">Tous</button>
+			<button class="btn-filter" data-filter="objets">Objets</button>
+			<button class="btn-filter" data-filter="appart">Appartements</button>
+			<button class="btn-filter" data-filter="hotels">Hôtels & restaurants</button>	
 		</div>
 		<div class="gallery">
 		</div>
