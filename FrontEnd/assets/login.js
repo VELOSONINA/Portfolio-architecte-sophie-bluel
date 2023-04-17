@@ -31,7 +31,7 @@ window.onload = function () {
         }, 5000);
       } else {
         //enregistrer le token
-        localStorage.setItem('isLogin',"true")
+        window.localStorage.setItem('token',data.token)
         window.location.replace("index.html"); 
       }
     });

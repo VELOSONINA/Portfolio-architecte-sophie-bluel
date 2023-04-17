@@ -1,7 +1,7 @@
-let portfolioUrl = 'http://localhost:5678/api/works';
+//appelde la fonction mode édition
+modeEdition();
 
-let isLogin = localStorage.getItem('isLogin');
-console.log(isLogin);
+let portfolioUrl = 'http://localhost:5678/api/works';
 
 //récuperer des galerie depuis backend
 fetch(portfolioUrl)
@@ -92,22 +92,32 @@ function showPortfolio(datas){
     };
 }   
 
+function modeEdition(){
+    //suppression du token en logout
+    let logout = document.querySelector('.link-logout');
+        logout.addEventListener("click",function(){
+        window.localStorage.removeItem("token")
+    });
+
+    //récuperation du token et stocker dans localstorage
+    let isLoged = localStorage.getItem("token");
+    if (isLoged != null){
+        showEditElement("block", 'mode-edition');
+        showEditElement("none", 'mode-visitor')
+    }else{
+        showEditElement("none", 'mode-edition');
+        showEditElement("block", 'mode-visitor')
+    }}
+
 //Afficher la page de chargement
-function showEditElement(){
-    let editsElements = document.getElementsByClassName('edit-mode-actif');
+function showEditElement(styleDisplay, paramClassName){
+    let editsElements = document.getElementsByClassName(paramClassName);
 
     for (let i = 0; i < editsElements.length; i++) {
-        const editsElement = editsElements[i]; 
-    
-        if(getComputedStyle(editsElement).display != "block"){
-            editsElement.style.display = "block";
-            
-        } else {
-            editsElement.style.display = "none";
-        }
+        editsElements[i].style.display = styleDisplay;
     }
 }
-showEditElement()
+
 
         
 

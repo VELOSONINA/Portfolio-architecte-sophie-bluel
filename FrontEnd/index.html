@@ -14,10 +14,10 @@
 <body>
 
 <header>
-	<article>
-		<div class="menu-edit edit-mode-actif" >
-			<span class="edit-mode-actif"><i class="fa-regular fa-pen-to-square"></i>Mode d'édition</br>
-			<button class="btn-edit edit-mode-actif">publier les changements</button>		
+	<article class="mode-edition">
+		<div class="menu-edit" >
+			<span><i class="fa-regular fa-pen-to-square"></i>Mode d'édition</span>
+			<button class="btn-edit">publier les changements</button>		
 		</div>
 	</article>
 	<article class="article-edit">
@@ -26,8 +26,8 @@
 			<ul>
 				<li><a href="#projet">projets</a></li>
 				<li><a href="#contact">contact</a></li>
-				<li class="edit-mode-actif"><a href="login.html">login</a></li>
-				<li class="edit-mode-actif"><a class="logout" href="login.html">logout</a></li>
+				<li class="mode-visitor"><a href="login.html">login</a></li>
+				<li class="mode-edition link-logout"><a href="index.html">logout</a></li>
 				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 			</ul>
 		</nav>
@@ -37,7 +37,7 @@
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
-			<span class="edit-mode-actif"><i class="fa-regular fa-pen-to-square"></i>modifier</span>
+			<span class="mode-edition"><i class="fa-regular fa-pen-to-square"></i>modifier</span>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -48,8 +48,8 @@
 	</section>
 	<section id="portfolio">
 		<h2 id="projets">Mes Projets</h2>
-		<p class="edit-mode-actif"><i class="fa-regular fa-pen-to-square"></i>modifier</p>
-		<div class="btn-filters edit-mode-actif">
+		<p class="mode-edition"><i class="fa-regular fa-pen-to-square"></i>modifier</p>
+		<div class="btn-filters mode-visitor">
 			<button class="btn-filter" data-filter="all">Tous</button>
 			<button class="btn-filter" data-filter="objets">Objets</button>
 			<button class="btn-filter" data-filter="appart">Appartements</button>

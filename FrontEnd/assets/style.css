@@ -97,20 +97,22 @@ h2{
 	color: #1D6154
 }
 
+.mode-edition {
+	display: none;
+}
+
 .menu-edit {
 	font-weight: 500;
 	font-size: 16px;
 	background-color: black;
 	text-align: center;
 	padding: 20px 0;
-	display: none;
 }
 
 .menu-edit span {
 	font-family: 'work', sans-serif;
 	color: white;
 	padding-right: 10px;
-	display: none;
 }
 
 .menu-edit span i {
@@ -119,7 +121,6 @@ h2{
 }
 
 .btn-edit {
-	display :none;
 	font-family: 'work',sans-serif;
     font-weight: 500;
     font-size: 14px;
@@ -149,9 +150,6 @@ nav a {
 	text-decoration: none;
 }
 
-nav .logout {
-	display: none;
-}
 
 nav li:hover {
 	color: #B1663C;
@@ -177,7 +175,6 @@ nav li:hover {
 	position: relative;
 	top: 20px;
 	left: 52px;
-	display: none;;
 	cursor: pointer;
 }
 
@@ -211,7 +208,6 @@ nav li:hover {
 	bottom: 51px;
 	left: 14%;
 	cursor: pointer;
-	display: none;
 }
 
 #portfolio p i {
