@@ -48,14 +48,22 @@
 	</section>
 	<section id="portfolio">
 		<h2 id="projets">Mes Projets</h2>
-		<p class="mode-edition"><i class="fa-regular fa-pen-to-square"></i>modifier</p>
+		<p class="mode-edition" id="myBtn-modal"><i class="fa-regular fa-pen-to-square"></i>modifier</p>
 		<div class="btn-filters mode-visitor">
 			<button class="btn-filter" data-filter="all">Tous</button>
 			<button class="btn-filter" data-filter="objets">Objets</button>
 			<button class="btn-filter" data-filter="appart">Appartements</button>
 			<button class="btn-filter" data-filter="hotels">Hôtels & restaurants</button>	
 		</div>
-		<div class="gallery">
+		<div class="gallery"></div>
+		<div id="myModal" class="modal">
+			<div class="modal-content">	
+				<h2>Galerie photo</h2>
+				<span class="close">x</span>
+				<div class="modal-gallery"> </div>
+				<button class="btn-add-photo">Ajouter une photo</button>
+				<a class="sup-gallery" href="#">Supprimer la galerie</a>
+			</div>
 		</div>
 	</section>
 	<section id="contact">

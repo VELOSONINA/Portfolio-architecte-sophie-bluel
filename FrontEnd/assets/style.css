@@ -57,14 +57,15 @@ header {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	/* margin: 50px 0 */
 }
+
 .login-header {
 	display: flex;
 	flex-direction: unset;
 	justify-content: space-between;
 	margin: 50px 0
 }
+
 .article-edit {
 	display: flex;
 	justify-content: space-between;
@@ -113,6 +114,7 @@ h2{
 	font-family: 'work', sans-serif;
 	color: white;
 	padding-right: 10px;
+	cursor: pointer;
 }
 
 .menu-edit span i {
@@ -120,18 +122,22 @@ h2{
 	padding-right: 10px;
 }
 
-.btn-edit {
+button {
 	font-family: 'work',sans-serif;
     font-weight: 500;
     font-size: 14px;
-    padding: 10px;
-	background-color: white;
-	color: black;
-	border: 1px solid black;
 	border-radius: 60px;
 	cursor: pointer;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-	text-align: center;
+	padding: 10px;
+	width: auto;
+}
+
+.btn-edit {
+    
+	background-color: white;
+	color: black;
+	border: 1px solid black;
 }
 
 nav ul {
@@ -206,7 +212,7 @@ nav li:hover {
 	font-size: 16px;
 	position: relative;
 	bottom: 51px;
-	left: 14%;
+	left: 154px;
 	cursor: pointer;
 }
 
@@ -214,6 +220,7 @@ nav li:hover {
 	padding-right: 10px;
 }
 
+/*les galleries*/
 .gallery {
 	width: 100%;
 	display: grid;
@@ -224,9 +231,103 @@ nav li:hover {
 
 .gallery img {
 	width: 100%;
-
 }
 
+/*boîte modal*/
+.modal {
+	display: none; 
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%; 
+	height: 100%; 
+	margin: auto;
+	overflow: auto; 
+	background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content h2 {
+	font-family: 'work',sans-serif;
+	font-size: 20px;
+	font-weight: 400;
+	color: #000;
+}
+  
+/* contenu du modal */
+.modal-content {
+	background-color: #fefefe; 
+	padding: 40px;
+	border: 1px solid #b3b3b3;
+	border-radius: 10px;
+	width: 40%; 
+	text-align: center;
+	margin: auto;
+}
+
+.modal-gallery {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-column-gap: 10px;
+	margin: 2em 10%;
+	padding-bottom: 20px;
+	text-align: left;
+    box-shadow: 0px 1px 0px #b3b3b3;
+}
+
+.modal-content img {
+	width: 100%;
+}
+
+.modal-gallery i {
+	position: relative;
+    bottom: 85%;
+    right: 5px;
+    float: right;
+    color: white;
+    background-color: black;
+    padding: 4px;
+    border-radius: 3px;
+	cursor: pointer;
+}
+
+.fa-arrows-up-down-left-right {
+	margin-right: 4px;
+}
+
+.btn-add-photo {
+	margin-bottom: 20px;
+	color: white;
+	border: 1px solid #1D6154;
+	background-color: #1D6154;
+	width: 239px;
+	height: 36px;
+}
+
+/* bouton close */
+.close {
+    color: black;
+    float: right;
+    position: relative;
+    top: -70px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.sup-gallery {
+	display: block;
+    text-decoration: none;
+    color: red;
+}
+
+/*les filtres*/
 .btn-filters {
 	display: inline-block;
 	width: 100%;
@@ -240,10 +341,6 @@ nav li:hover {
     font-size: 16px;
     padding: 10px;
     margin: 2em auto;
-    text-align: center;
-    border-radius: 60px;
-	width: auto;
-	cursor: pointer;
 }
 
 .white-bgrd-btn { 
@@ -259,6 +356,7 @@ nav li:hover {
 	border: none;
 }
 
+/*section contact*/
 #contact {
 	width: 50%;
 	margin: auto;
@@ -332,6 +430,7 @@ input[type="submit"]{
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
+
 #login label {
 	margin: 2em 0 1em 0;
 }
@@ -345,6 +444,7 @@ input[type="submit"]{
 	display: none;
 	padding-top: 10px;
 }
+
 
 footer nav ul {
 	display: flex;

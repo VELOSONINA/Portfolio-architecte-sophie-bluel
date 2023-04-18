@@ -18,6 +18,7 @@ fetch(portfolioUrl)
 
     showPortfolio(portfolios);
     filterPortfolio(portfolios);
+    showModal(portfolios);
 });
 
 //gestion des filtres
@@ -92,6 +93,7 @@ function showPortfolio(datas){
     };
 }   
 
+//fonction pour afficher le mode d'édition de la page
 function modeEdition(){
     //suppression du token en logout
     let logout = document.querySelector('.link-logout');
@@ -109,7 +111,7 @@ function modeEdition(){
         showEditElement("block", 'mode-visitor')
     }}
 
-//Afficher la page de chargement
+//Afficher la page de chargement ou le mode d'édition de la page
 function showEditElement(styleDisplay, paramClassName){
     let editsElements = document.getElementsByClassName(paramClassName);
 
@@ -117,6 +119,75 @@ function showEditElement(styleDisplay, paramClassName){
         editsElements[i].style.display = styleDisplay;
     }
 }
+
+// déclaration variable modal
+let modal = document.getElementById("myModal");
+
+//déclaration du variable pour l'ouverture du modal
+let modifButton = document.getElementById("myBtn-modal");
+
+// déclaration variable pour la fermeture du modal
+let closeModal = document.getElementsByClassName("close")[0];
+
+//fonction pour afficher les elements dans le modal
+function showModal(datasModal){  
+    let galleryModal = document.getElementsByClassName("modal-gallery");
+    let iconArrows = document.createElement('i');
+
+    iconArrows.classList.add("fa-solid", "fa-arrows-up-down-left-right");
+    galleryModal[0].innerHTML = '';
+    
+    for (i=0 ; i< datasModal.length; i++){
+
+        //création des éléments dans le modal
+        // let titleModal = document.createElement('h2');
+        let modalContent = document.createElement('modal-content');
+        let figureModal = document.createElement('figure');
+        let imagesModal = document.createElement('img');
+        let figCapModal = document.createElement('figcaption');
+        let iconTrash = document.createElement('i');
+       
+         
+        //Afficher les images et les titres 
+        // titleModal.innerHTML = "Galerie photos"; 
+        imagesModal.src = datasModal[i].imageUrl;
+        figCapModal.innerHTML = "éditer";
+        iconTrash.classList.add("fa-solid", "fa-trash-can");
+        
+        //rattacher les images à modalContent
+        figureModal.appendChild(imagesModal);
+        figureModal.appendChild(figCapModal);
+        figureModal.appendChild(iconTrash);
+        if (i===0){ 
+        figureModal.appendChild(iconArrows)
+        };
+        modalContent.appendChild(figureModal);
+
+
+        //rattacher les éléments à modal
+        galleryModal[0].appendChild(figureModal);
+    };
+}   
+
+// fontion pour ouvrir le modal
+modifButton.onclick = function() {
+  modal.style.display = "block";
+}
+
+// fonction <span> (x), fermeture du modal
+closeModal.onclick = function() {
+  modal.style.display = "none";
+}
+
+// fonction qui permet de fermer le modal quand on click à l'extérieur du modal
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+
 
 
         
