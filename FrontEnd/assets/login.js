@@ -3,6 +3,8 @@ window.onload = function () {
   let buttonConnexion = document.querySelector('#loginClick');
   buttonConnexion.addEventListener("click",function(e){ 
     e.preventDefault();
+
+    //récuperer la valeur des champs password et email
     let password = document.getElementById("password").value;
     let eMail = document.getElementById("email").value;
     

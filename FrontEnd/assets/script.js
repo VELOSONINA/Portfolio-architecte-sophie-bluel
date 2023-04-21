@@ -129,40 +129,44 @@ let modifButton = document.getElementById("myBtn-modal");
 // déclaration variable pour la fermeture du modal
 let closeModal = document.getElementsByClassName("close")[0];
 
+let galleryModal = document.getElementsByClassName("modal-gallery");
+let iconArrows = document.createElement('i');
+
 //fonction pour afficher les elements dans le modal
 function showModal(datasModal){  
-    let galleryModal = document.getElementsByClassName("modal-gallery");
-    let iconArrows = document.createElement('i');
+    // let galleryModal = document.getElementsByClassName("modal-gallery");
+    // let iconArrows = document.createElement('i');
 
+    //ajouter l'icone flèches dans le premier élémént
     iconArrows.classList.add("fa-solid", "fa-arrows-up-down-left-right");
+    
     galleryModal[0].innerHTML = '';
     
     for (i=0 ; i< datasModal.length; i++){
 
         //création des éléments dans le modal
-        // let titleModal = document.createElement('h2');
         let modalContent = document.createElement('modal-content');
         let figureModal = document.createElement('figure');
         let imagesModal = document.createElement('img');
         let figCapModal = document.createElement('figcaption');
         let iconTrash = document.createElement('i');
-       
-         
+           
         //Afficher les images et les titres 
-        // titleModal.innerHTML = "Galerie photos"; 
         imagesModal.src = datasModal[i].imageUrl;
         figCapModal.innerHTML = "éditer";
+
+        //ajouter l'icone corbeil
         iconTrash.classList.add("fa-solid", "fa-trash-can");
         
         //rattacher les images à modalContent
         figureModal.appendChild(imagesModal);
         figureModal.appendChild(figCapModal);
         figureModal.appendChild(iconTrash);
+        //afficher l'icone flèche que dans la première image
         if (i===0){ 
         figureModal.appendChild(iconArrows)
         };
         modalContent.appendChild(figureModal);
-
 
         //rattacher les éléments à modal
         galleryModal[0].appendChild(figureModal);
@@ -171,24 +175,36 @@ function showModal(datasModal){
 
 // fontion pour ouvrir le modal
 modifButton.onclick = function() {
-  modal.style.display = "block";
+    modal.style.display = "block";
 }
 
 // fonction <span> (x), fermeture du modal
 closeModal.onclick = function() {
-  modal.style.display = "none";
+    modal.style.display = "none";
 }
 
 // fonction qui permet de fermer le modal quand on click à l'extérieur du modal
 window.onclick = function(event) {
-  if (event.target == modal) {
+    if (event.target == modal) {
     modal.style.display = "none";
-  }
+    }
+}
+
+let buttonTrash = document.querySelector('.iconTrash');
+
+if (buttonTrash != null){
+    buttonTrash.addEventListener("click",eventClickFunction);  
+    function eventClickFunction(event){
+        console.log(event,this);
+    }  
 }
 
 
-
-
-
-        
+//Ajouter une image quand on click sur le boutton ajouter une image dans modal
+let buttonAddImage = document.querySelector('.btn-add-img');
+buttonAddImage.addEventListener("click",function(e){ 
+    e.preventDefault();
+    console.log(buttonAddImage);
+   
+})
 
