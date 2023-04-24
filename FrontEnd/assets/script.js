@@ -5,7 +5,7 @@ let portfolioUrl = 'http://localhost:5678/api/works';
 
 //récuperer des galerie depuis backend
 fetch(portfolioUrl)
-    .then(reponse => reponse.json())
+    .then(response => response.json())
     .then(portfolios => {
  
     //affiche les boutons en blanc
@@ -109,7 +109,8 @@ function modeEdition(){
     }else{
         showEditElement("none", 'mode-edition');
         showEditElement("block", 'mode-visitor')
-    }}
+    }
+}
 
 //Afficher la page de chargement ou le mode d'édition de la page
 function showEditElement(styleDisplay, paramClassName){
@@ -124,7 +125,7 @@ function showEditElement(styleDisplay, paramClassName){
 let modal = document.getElementById("myModal");
 
 //déclaration du variable pour l'ouverture du modal
-let modifButton = document.getElementById("myBtn-modal");
+let openModal = document.getElementById("myBtn-modal");
 
 // déclaration variable pour la fermeture du modal
 let closeModal = document.getElementsByClassName("close")[0];
@@ -134,16 +135,14 @@ let iconArrows = document.createElement('i');
 
 //fonction pour afficher les elements dans le modal
 function showModal(datasModal){  
-    // let galleryModal = document.getElementsByClassName("modal-gallery");
-    // let iconArrows = document.createElement('i');
-
+   
     //ajouter l'icone flèches dans le premier élémént
     iconArrows.classList.add("fa-solid", "fa-arrows-up-down-left-right");
     
     galleryModal[0].innerHTML = '';
     
     for (i=0 ; i< datasModal.length; i++){
-
+        
         //création des éléments dans le modal
         let modalContent = document.createElement('modal-content');
         let figureModal = document.createElement('figure');
@@ -157,7 +156,28 @@ function showModal(datasModal){
 
         //ajouter l'icone corbeil
         iconTrash.classList.add("fa-solid", "fa-trash-can");
-        
+
+        //selectionner une image
+        iconTrash.dataset.imageId = datasModal[i].id;
+        //fonction pour supprimer une image
+        iconTrash.addEventListener("click",onDelete);  
+        async function onDelete(event){
+            let id = event.target.dataset.imageId; 
+            let authToken = localStorage.getItem("token");
+            let response = await fetch(`http://localhost:5678/api/works/${id}`,{
+                method: 'DELETE',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`,
+                },
+            })
+            .then(response => {
+                return response.json();
+            })
+            .then(data =>
+                console.log(data));
+        }
+             
         //rattacher les images à modalContent
         figureModal.appendChild(imagesModal);
         figureModal.appendChild(figCapModal);
@@ -174,7 +194,7 @@ function showModal(datasModal){
 }   
 
 // fontion pour ouvrir le modal
-modifButton.onclick = function() {
+openModal.onclick = function() {
     modal.style.display = "block";
 }
 
@@ -190,21 +210,91 @@ window.onclick = function(event) {
     }
 }
 
-let buttonTrash = document.querySelector('.iconTrash');
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+        modal.style.display = "none";
+    }
+  });
 
-if (buttonTrash != null){
-    buttonTrash.addEventListener("click",eventClickFunction);  
-    function eventClickFunction(event){
-        console.log(event,this);
-    }  
-}
-
-
-//Ajouter une image quand on click sur le boutton ajouter une image dans modal
-let buttonAddImage = document.querySelector('.btn-add-img');
-buttonAddImage.addEventListener("click",function(e){ 
+//Afficher la page pour ajouter une image quand on click sur le boutton ajouter une image dans modal
+let buttonDispModal = document.querySelector('.btn-change-content');
+buttonDispModal.addEventListener("click",function(e){ 
     e.preventDefault();
-    console.log(buttonAddImage);
-   
-})
+    
 
+    let modalContent = localStorage.getItem(".modal-content")
+    if (modalContent != null){
+        showReloadModal("block", 'modal-one');
+        showReloadModal("none", 'mode-two')
+    }else{
+        localStorage.removeItem(".modal-content");
+        showReloadModal("none", 'modal-one');
+        showReloadModal("block", 'modal-two')
+    }  
+  
+function showReloadModal(styleDisplay, paramClassName){
+    let reLoadElements = document.getElementsByClassName(paramClassName);
+    for (let i = 0; i < reLoadElements.length; i++) {
+        reLoadElements[i].style.display = styleDisplay;
+    }
+} 
+     
+
+//fonction du bouton pour charger l'image
+let buttonLoadImg = document.getElementById('add-image');
+buttonLoadImg.addEventListener('click', async(e)=>{
+    e.preventDefault();
+    console.log(buttonLoadImg);
+//     let authToken = localStorage.getItem("token");
+//     console.log(buttonLoadImg);
+//     await fetch('http://localhost:5678/api/works', {
+    
+//         method: 'POST',
+//         headers: {
+//            Accept: "application/json",
+//            'Content-Type': 'multipart/form-data',
+//            'Authorization': `Bearer ${authToken}`,
+//         },
+//     })
+//     .then((response) => response.json())
+//     .then((data) => {
+//         console.log(data)
+// }) 
+// })
+
+// buttonLoadImg.addEventListener('change', (e) => { 
+    let category = document.getElementById("category").value;
+    let title = document.getElementById("title").value;
+    console.log(category,title)
+    
+    let formdata = new FormData();
+
+
+    let image = e.target.files[0];
+    formdata.append('title', title);
+    formdata.append('category', category);
+    formdata.append('image', image);
+    console.log(formdata);
+  
+    fetch('http://localhost:5678/api/works', {
+        method: 'POST', 
+        headers :  {
+            Accept: 'application/json',
+            'Content-Type': 'multipart/form-data',
+         },  
+        body: formdata
+    })
+    .then(async (response) => {
+        let result = await response.json();
+        console.log(result);
+    });
+});
+});
+
+
+//fonction du boutton valider
+let buttonValid = document.querySelector('valid');
+buttonValid.addEventListener('click', function(e){
+    e.preventDefault();
+    console.log(this)
+})
