@@ -63,32 +63,36 @@
 				<div class="modal-header">
 					<h2 class="modal-one">Galerie photo</h2>
 					<h2 class="modal-two">Ajout photo</h2>
-					<a href="" class="modal-two"><i class="fa-solid fa-arrow-left"></i></a>
+					<i class="fa-solid fa-arrow-left modal-two"></i>
 					<span class="close hidden">x</span>
 				</div>
 				<div class="modal-body">
 					<div class="modal-gallery modal-one"></div>	
-					<div class="modal-two">
-						<div class="img-content">
-							<i class="fa-sharp fa-regular fa-image"></i>
-							<input type="file" accept="image/*" value="+ Ajouter photo" name="add-image" id="add-image"/>
-							<span>jpg, png : 4mo max</span>
-						</div>
-						<div class="form-modal">
-							<form action="#" method="post">
-								<label for="title">Titre</label><br>
-								<input type="text" name="title" id="title"><br>
-								<label for="category">Catégorie</label><br>
-								<select type="select" name="category" id="category"></select>
-							</form>
-						</div>	
-					</div>
+					<div class="form-modal modal-two">
+						<form action="#" method="post" id="form-works">
+							<div class="img-content">
+								<i class="fa-sharp fa-regular fa-image"></i>
+								<input type="file" id="fileInput"/>
+								<img id="preview">
+								<button>+Ajouter photo</button>
+								<span>jpg, png : 4mo max</span>
+							</div>
+							<label for="title">Titre</label>
+							<input type="text" name="title" id="title">
+							<label for="category">Catégorie</label>
+							<select name="category" id="categorie">
+								<option value="1">Objets</option>
+								<option value="2">Appartements</option>
+								<option value="3">Hôtels & restaurants</option>
+							</select>
+							<input type="submit" id="valid" class="modal-two">
+						</form>
+					</div>	
 				</div>
 				<div class="modal-footer">
 					<hr>
 					<button class="btn-change-content modal-one">Ajouter une photo</button>
 					<a class="sup-gallery modal-one" href="#">Supprimer la galerie</a>
-					<input type="submit" value="Valider" id="valid" class="modal-two">
 				</div>
 			</div>
 		</div>

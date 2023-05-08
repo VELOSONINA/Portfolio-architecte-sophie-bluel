@@ -284,6 +284,7 @@ nav li:hover {
 
 .modal-content img {
 	width: 100%;
+	object-fit: cover;
 }
 
 .modal-gallery i {
@@ -334,22 +335,36 @@ hr {
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-.img-content input {
+.img-content button {
 	font-family: 'Syne';
 	font-weight: 700;
-	color: white;
-	margin : 2em auto ;
+	color: #306685;
+    margin: 5px auto;
+    background-color: #CBD6DC;
+    text-align: center;
+    border-radius: 60px;
+    cursor: pointer;
+    border: none;
+	display: none;
+} 
+
+.img-content input {
+	/* display: none; */
+	font-family: 'Syne';
+	font-weight: 700;
+	color: #306685;
+	margin : 5px auto ;
+	background-color: #CBD6DC;
 	text-align: center;
 	border-radius: 60px ;
+	width: 239px;
+	height: 36px;
 	cursor: pointer;
 } 
 
-.modal-footer input,
-.img-content input {
-	border: 1px solid #b3b3b3!important;
-	background-color: #b3b3b3!important ;
-	width: 239px;
-	height: 36px;
+.img-content img {
+	width: 52%;
+	object-fit: cover;
 }
 
 .sup-gallery {
@@ -363,13 +378,19 @@ hr {
     flex-direction: column;
 	justify-content: center;
     align-items: center;
-    padding: 20px;
-    width: 75%;
+    padding: 20px 0;
+    width: 100%;
+	margin: auto;
     height: 200px;
-    margin: auto;
     margin-bottom: 20px;
     background-color: #E8F1F6;
+	overflow: hidden;
 }
+
+/* img-content button {
+	display: none;
+    background: #306685;
+} */ 
 
 .fa-arrow-left {
 	float: left;
@@ -377,10 +398,12 @@ hr {
     bottom: 65px;
     font-size: larger;
     color: black;
+	cursor: pointer;
 }
 
 .fa-image {
 	font-size: 80px;
+	color: #B9C5CC;
 }
 
 /* bouton close */
@@ -398,6 +421,13 @@ hr {
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+
+.modal-footer input {
+	border: 1px solid #b3b3b3!important;
+	background-color: #b3b3b3!important ;
+	width: 239px;
+	height: 36px;
 }
 
 .modal-footer {

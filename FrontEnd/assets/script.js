@@ -2,12 +2,31 @@
 modeEdition();
 
 let portfolioUrl = 'http://localhost:5678/api/works';
-
+loadPortfolios (portfolioUrl);
 //récuperer des galerie depuis backend
-fetch(portfolioUrl)
-    .then(response => response.json())
-    .then(portfolios => {
+// fetch(portfolioUrl)
+//     .then(response => response.json())
+//     .then(portfolios => {
  
+//     //affiche les boutons en blanc
+//     let btnClass = document.getElementsByClassName('btn-filter');
+//     for(let i =0; i < btnClass.length; i++){
+//         btnClass[i].className = "btn-filter white-bgrd-btn";
+//     }
+//     //affiche le premier bouton en vert
+//     btnClass[0].className = "btn-filter green-bgrd-btn";
+
+//     showPortfolio(portfolios);
+//     filterPortfolio(portfolios);
+//     showModal(portfolios);
+// });
+
+function loadPortfolios (paramPortfolioUrl){
+    //récuperer des galerie depuis backend
+    fetch(paramPortfolioUrl)
+        .then(response => response.json())
+        .then(portfolios => {
+
     //affiche les boutons en blanc
     let btnClass = document.getElementsByClassName('btn-filter');
     for(let i =0; i < btnClass.length; i++){
@@ -19,7 +38,8 @@ fetch(portfolioUrl)
     showPortfolio(portfolios);
     filterPortfolio(portfolios);
     showModal(portfolios);
-});
+    });
+}
 
 //gestion des filtres
 function filterPortfolio(datasCategories){ 
@@ -87,6 +107,7 @@ function showPortfolio(datas){
         //rattacher les images à figureElement
         figureElement.appendChild(imagesElement);
         figureElement.appendChild(figCapElement);
+        figureElement.classList.add("work-to-delete-" + datas[i].id)
 
         //rattacher figureElement à la galleryElement
         galleryContainer[0].appendChild(figureElement);
@@ -124,12 +145,6 @@ function showEditElement(styleDisplay, paramClassName){
 // déclaration variable modal
 let modal = document.getElementById("myModal");
 
-//déclaration du variable pour l'ouverture du modal
-let openModal = document.getElementById("myBtn-modal");
-
-// déclaration variable pour la fermeture du modal
-let closeModal = document.getElementsByClassName("close")[0];
-
 let galleryModal = document.getElementsByClassName("modal-gallery");
 let iconArrows = document.createElement('i');
 
@@ -158,11 +173,12 @@ function showModal(datasModal){
         iconTrash.classList.add("fa-solid", "fa-trash-can");
 
         //selectionner une image
-        iconTrash.dataset.imageId = datasModal[i].id;
+        iconTrash.dataset.workId = datasModal[i].id;
         //fonction pour supprimer une image
         iconTrash.addEventListener("click",onDelete);  
         async function onDelete(event){
-            let id = event.target.dataset.imageId; 
+            event.preventDefault()
+            let id = event.target.dataset.workId; 
             let authToken = localStorage.getItem("token");
             let response = await fetch(`http://localhost:5678/api/works/${id}`,{
                 method: 'DELETE',
@@ -172,43 +188,61 @@ function showModal(datasModal){
                 },
             })
             .then(response => {
-                return response.json();
+                // console.log('response =', response)
+                // return response.json();
             })
-            .then(data =>
-                console.log(data));
+            .then(data => {
+                let targetId = event.target.dataset.workId; 
+                console.log('event.target =', event.target)
+                console.log('targetId =', targetId)
+                let worksToDelete = document.getElementsByClassName("work-to-delete-" + targetId);
+                
+                for (let i=0; i<worksToDelete.length; i++) {
+                    worksToDelete[i].remove()
+                }
+            })
+            .catch (error => {
+                console.error(error);
+            });
         }
-             
+     
         //rattacher les images à modalContent
         figureModal.appendChild(imagesModal);
         figureModal.appendChild(figCapModal);
         figureModal.appendChild(iconTrash);
         //afficher l'icone flèche que dans la première image
         if (i===0){ 
-        figureModal.appendChild(iconArrows)
+            figureModal.appendChild(iconArrows)
         };
+
+        figureModal.classList.add("work-to-delete-" + datasModal[i].id)
         modalContent.appendChild(figureModal);
 
         //rattacher les éléments à modal
         galleryModal[0].appendChild(figureModal);
     };
-}   
+};  
 
+//déclaration du variable pour l'ouverture du modal
+let openModal = document.getElementById("myBtn-modal");
 // fontion pour ouvrir le modal
 openModal.onclick = function() {
     modal.style.display = "block";
-}
+};
 
-// fonction <span> (x), fermeture du modal
+// déclaration variable pour la fermeture du modal
+let closeModal = document.getElementsByClassName("close")[0];
+//fonction <span> (x), fermeture du modal
 closeModal.onclick = function() {
-    modal.style.display = "none";
-}
+   modal.style.display = "none";
+};
 
 // fonction qui permet de fermer le modal quand on click à l'extérieur du modal
 window.onclick = function(event) {
     if (event.target == modal) {
     modal.style.display = "none";
     }
-}
+};
 
 document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && !modal.classList.contains("hidden")) {
@@ -221,80 +255,96 @@ let buttonDispModal = document.querySelector('.btn-change-content');
 buttonDispModal.addEventListener("click",function(e){ 
     e.preventDefault();
     
-
-    let modalContent = localStorage.getItem(".modal-content")
+    let modalContent = document.getElementById(".modal-content");
     if (modalContent != null){
         showReloadModal("block", 'modal-one');
         showReloadModal("none", 'mode-two')
     }else{
-        localStorage.removeItem(".modal-content");
         showReloadModal("none", 'modal-one');
         showReloadModal("block", 'modal-two')
     }  
-  
+});
+
 function showReloadModal(styleDisplay, paramClassName){
     let reLoadElements = document.getElementsByClassName(paramClassName);
     for (let i = 0; i < reLoadElements.length; i++) {
         reLoadElements[i].style.display = styleDisplay;
     }
-} 
-     
+}; 
 
-//fonction du bouton pour charger l'image
-let buttonLoadImg = document.getElementById('add-image');
-buttonLoadImg.addEventListener('click', async(e)=>{
+//revenir sur le premier affichage du modal
+let buttonArrowLeft = document.querySelector('.fa-arrow-left');
+buttonArrowLeft.addEventListener("click",function(e){ 
     e.preventDefault();
-    console.log(buttonLoadImg);
-//     let authToken = localStorage.getItem("token");
-//     console.log(buttonLoadImg);
-//     await fetch('http://localhost:5678/api/works', {
-    
-//         method: 'POST',
-//         headers: {
-//            Accept: "application/json",
-//            'Content-Type': 'multipart/form-data',
-//            'Authorization': `Bearer ${authToken}`,
-//         },
-//     })
-//     .then((response) => response.json())
-//     .then((data) => {
-//         console.log(data)
-// }) 
-// })
+    showReloadModal("none", 'modal-two');
+    showReloadModal("grid", 'modal-one');
+});
 
-// buttonLoadImg.addEventListener('change', (e) => { 
-    let category = document.getElementById("category").value;
+// changer le type d'évenement et de balise cible "fileInput" -> Form "change" -> "submit"
+let formSubmit = document.getElementById('form-works');
+formSubmit.addEventListener("submit", sendPortfolio);
+
+async function sendPortfolio(event) {
+    event.preventDefault()
+    
+    let category = document.getElementById("categorie").value;
     let title = document.getElementById("title").value;
-    console.log(category,title)
+    console.log(title);
+    console.log(category)
+
+    let formData = new FormData();
+
+    let imageFile = fileInput.files[0];
+    console.log(imageFile)
+
+    formData.append('image', imageFile);
+    formData.append('title', title);
+    formData.append('category', category);
+
     
-    let formdata = new FormData();
-
-
-    let image = e.target.files[0];
-    formdata.append('title', title);
-    formdata.append('category', category);
-    formdata.append('image', image);
-    console.log(formdata);
-  
-    fetch('http://localhost:5678/api/works', {
-        method: 'POST', 
+    let authToken = localStorage.getItem("token");
+    let response = await fetch(`http://localhost:5678/api/works`,{
+        method: 'POST',
         headers :  {
-            Accept: 'application/json',
-            'Content-Type': 'multipart/form-data',
-         },  
-        body: formdata
+            // 'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${authToken}`,
+        },  
+        body: formData,
     })
     .then(async (response) => {
         let result = await response.json();
         console.log(result);
-    });
-});
-});
+        // tu affiche l'image qui à était uploadé 
+        // dans le modal et dans la page(les liste d'image)
+        // loadPortfolios (portfolioUrl);
+        // let img = document.createElement('img');                                                                  
+        
+    })
+    .catch (error => {
+        console.error(error)
+    });   
+}; 
 
+//fonction du bouton pour charger l'image
+let fileInput = document.getElementById("fileInput");
+let preview = document.getElementById("preview");
 
-//fonction du boutton valider
-let buttonValid = document.querySelector('valid');
-buttonValid.addEventListener('click', function(e){
+fileInput.addEventListener("change", updateImageDisplay);
+
+async function updateImageDisplay(e) {
     e.preventDefault();
-    console.log(this)
-})
+
+    let file = fileInput.files[0];
+    let reader = new FileReader();
+
+        reader.addEventListener("load", function() {
+            preview.src = reader.result;
+        });
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+			preview.src = "";
+		}
+};
+
+
