@@ -3,23 +3,6 @@ modeEdition();
 
 let portfolioUrl = 'http://localhost:5678/api/works';
 loadPortfolios (portfolioUrl);
-//récuperer des galerie depuis backend
-// fetch(portfolioUrl)
-//     .then(response => response.json())
-//     .then(portfolios => {
- 
-//     //affiche les boutons en blanc
-//     let btnClass = document.getElementsByClassName('btn-filter');
-//     for(let i =0; i < btnClass.length; i++){
-//         btnClass[i].className = "btn-filter white-bgrd-btn";
-//     }
-//     //affiche le premier bouton en vert
-//     btnClass[0].className = "btn-filter green-bgrd-btn";
-
-//     showPortfolio(portfolios);
-//     filterPortfolio(portfolios);
-//     showModal(portfolios);
-// });
 
 function loadPortfolios (paramPortfolioUrl){
     //récuperer des galerie depuis backend
@@ -175,37 +158,28 @@ function showModal(datasModal){
         //selectionner une image
         iconTrash.dataset.workId = datasModal[i].id;
         //fonction pour supprimer une image
-        iconTrash.addEventListener("click",onDelete);  
-        async function onDelete(event){
+        iconTrash.addEventListener("click",onDelete); 
+
+        function onDelete(event){
             event.preventDefault()
             let id = event.target.dataset.workId; 
-            let authToken = localStorage.getItem("token");
-            let response = await fetch(`http://localhost:5678/api/works/${id}`,{
-                method: 'DELETE',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authToken}`,
-                },
-            })
-            .then(response => {
-                // console.log('response =', response)
-                // return response.json();
-            })
-            .then(data => {
-                let targetId = event.target.dataset.workId; 
-                console.log('event.target =', event.target)
-                console.log('targetId =', targetId)
-                let worksToDelete = document.getElementsByClassName("work-to-delete-" + targetId);
+            let worksToDelete = document.getElementsByClassName("work-to-delete-" + id);
                 
-                for (let i=0; i<worksToDelete.length; i++) {
-                    worksToDelete[i].remove()
+            let counter = worksToDelete.length;
+            let msg = confirm("Etes vous sûr de vouloir supprimé ?");
+            for (let i=0; i <= worksToDelete.length; i++) {
+                
+                if(msg == false){
+                    break
+                }  
+                worksToDelete[counter-1].remove();
+                counter--;
+                if(i == worksToDelete.length - 1) {
+                    deleteFigure(id);
                 }
-            })
-            .catch (error => {
-                console.error(error);
-            });
+            };
         }
-     
+    
         //rattacher les images à modalContent
         figureModal.appendChild(imagesModal);
         figureModal.appendChild(figCapModal);
@@ -221,7 +195,26 @@ function showModal(datasModal){
         //rattacher les éléments à modal
         galleryModal[0].appendChild(figureModal);
     };
-};  
+}; 
+
+async function deleteFigure(id){ 
+
+    let authToken = localStorage.getItem("token");
+    let response = await fetch(`http://localhost:5678/api/works/${id}`,{
+        method: 'DELETE',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`,
+        },
+    })
+    .then(data => {
+        console.log("figure supprimée");  
+    })
+    .catch (error => {
+        console.error(error);
+    });
+};
+
 
 //déclaration du variable pour l'ouverture du modal
 let openModal = document.getElementById("myBtn-modal");
@@ -261,7 +254,7 @@ buttonDispModal.addEventListener("click",function(e){
         showReloadModal("none", 'mode-two')
     }else{
         showReloadModal("none", 'modal-one');
-        showReloadModal("block", 'modal-two')
+        showReloadModal("block", 'modal-two') 
     }  
 });
 
@@ -282,6 +275,7 @@ buttonArrowLeft.addEventListener("click",function(e){
 
 // changer le type d'évenement et de balise cible "fileInput" -> Form "change" -> "submit"
 let formSubmit = document.getElementById('form-works');
+
 formSubmit.addEventListener("submit", sendPortfolio);
 
 async function sendPortfolio(event) {
@@ -289,40 +283,33 @@ async function sendPortfolio(event) {
     
     let category = document.getElementById("categorie").value;
     let title = document.getElementById("title").value;
-    console.log(title);
-    console.log(category)
-
     let formData = new FormData();
-
     let imageFile = fileInput.files[0];
-    console.log(imageFile)
 
     formData.append('image', imageFile);
     formData.append('title', title);
     formData.append('category', category);
 
-    
     let authToken = localStorage.getItem("token");
-    let response = await fetch(`http://localhost:5678/api/works`,{
-        method: 'POST',
-        headers :  {
-            // 'Content-Type': 'multipart/form-data',
-            'Authorization': `Bearer ${authToken}`,
-        },  
-        body: formData,
-    })
-    .then(async (response) => {
-        let result = await response.json();
-        console.log(result);
-        // tu affiche l'image qui à était uploadé 
-        // dans le modal et dans la page(les liste d'image)
-        // loadPortfolios (portfolioUrl);
-        // let img = document.createElement('img');                                                                  
+    try { 
+        let response = await fetch(`http://localhost:5678/api/works`,{
+            method: 'POST',
+            headers :  {
+                'Authorization': `Bearer ${authToken}`,
+            },  
+            body: formData,
+        })
         
-    })
-    .catch (error => {
-        console.error(error)
-    });   
+        //Affiche l'image qui à était uploadé 
+        // dans le modal et dans la page(les liste d'image)
+
+        .then(data => {   
+            loadPortfolios (portfolioUrl);
+            
+        });
+    }catch (error) {
+            console.error(error)
+    }; 
 }; 
 
 //fonction du bouton pour charger l'image
@@ -331,7 +318,7 @@ let preview = document.getElementById("preview");
 
 fileInput.addEventListener("change", updateImageDisplay);
 
-async function updateImageDisplay(e) {
+function updateImageDisplay(e) {
     e.preventDefault();
 
     let file = fileInput.files[0];
@@ -346,5 +333,9 @@ async function updateImageDisplay(e) {
 			preview.src = "";
 		}
 };
+
+
+
+
 
 

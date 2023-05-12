@@ -317,8 +317,7 @@ hr {
 	color: white;
 	border: 1px solid #1D6154;
 	background-color: #1D6154;
-	width: 239px;
-	height: 36px;
+	padding: 15px 20px;
 }
 
 /*fomulaire modal*/
@@ -335,35 +334,23 @@ hr {
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
-.img-content button {
+.label-fileInput {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: #306685;
-    margin: 5px auto;
-    background-color: #CBD6DC;
-    text-align: center;
-    border-radius: 60px;
-    cursor: pointer;
-    border: none;
+	background-color: #CBD6DC;
+	padding: 15px 30px;
+	text-align: center;
+	border-radius: 60px ;
+	cursor: pointer;
+}
+
+.img-content input {
 	display: none;
 } 
 
-.img-content input {
-	/* display: none; */
-	font-family: 'Syne';
-	font-weight: 700;
-	color: #306685;
-	margin : 5px auto ;
-	background-color: #CBD6DC;
-	text-align: center;
-	border-radius: 60px ;
-	width: 239px;
-	height: 36px;
-	cursor: pointer;
-} 
-
 .img-content img {
-	width: 52%;
+	width: 60%;
 	object-fit: cover;
 }
 
@@ -386,11 +373,6 @@ hr {
     background-color: #E8F1F6;
 	overflow: hidden;
 }
-
-/* img-content button {
-	display: none;
-    background: #306685;
-} */ 
 
 .fa-arrow-left {
 	float: left;
@@ -423,13 +405,17 @@ hr {
   cursor: pointer;
 }
 
-.modal-footer input {
+.form-modal input[type="submit"]{ 
 	border: 1px solid #b3b3b3!important;
 	background-color: #b3b3b3!important ;
-	width: 239px;
-	height: 36px;
+	padding: 15px 20px;
 }
 
+.form-modal hr {
+    width: 100%;
+    margin-top: 20px;
+}
+/*footer modal*/
 .modal-footer {
 	text-align: -webkit-center;
 }

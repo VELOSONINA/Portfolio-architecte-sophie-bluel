@@ -72,25 +72,27 @@
 						<form action="#" method="post" id="form-works">
 							<div class="img-content">
 								<i class="fa-sharp fa-regular fa-image"></i>
+								<label for="fileInput" class="label-fileInput">+Ajouter photo</label>
 								<input type="file" id="fileInput"/>
 								<img id="preview">
-								<button>+Ajouter photo</button>
 								<span>jpg, png : 4mo max</span>
 							</div>
 							<label for="title">Titre</label>
 							<input type="text" name="title" id="title">
+							<span id="erreur"></span>
 							<label for="category">Catégorie</label>
 							<select name="category" id="categorie">
 								<option value="1">Objets</option>
 								<option value="2">Appartements</option>
 								<option value="3">Hôtels & restaurants</option>
 							</select>
-							<input type="submit" id="valid" class="modal-two">
+							<hr>
+							<input type="submit" value="valider">	
 						</form>
 					</div>	
 				</div>
 				<div class="modal-footer">
-					<hr>
+					<hr class="modal-one">
 					<button class="btn-change-content modal-one">Ajouter une photo</button>
 					<a class="sup-gallery modal-one" href="#">Supprimer la galerie</a>
 				</div>
