@@ -255,6 +255,7 @@ buttonDispModal.addEventListener("click",function(e){
     }else{
         showReloadModal("none", 'modal-one');
         showReloadModal("block", 'modal-two') 
+        resetFormFunction()
     }  
 });
 
@@ -272,6 +273,13 @@ buttonArrowLeft.addEventListener("click",function(e){
     showReloadModal("none", 'modal-two');
     showReloadModal("grid", 'modal-one');
 });
+
+//fonction pour vider les champs dans le formulaire
+function resetFormFunction(){
+    let resetElement = document.getElementById("form-works");
+    preview.src = "";
+    resetElement.reset(); 
+}
 
 // changer le type d'évenement et de balise cible "fileInput" -> Form "change" -> "submit"
 let formSubmit = document.getElementById('form-works');
@@ -302,11 +310,15 @@ async function sendPortfolio(event) {
         
         //Affiche l'image qui à était uploadé 
         // dans le modal et dans la page(les liste d'image)
-
         .then(data => {   
-            loadPortfolios (portfolioUrl);
-            
+            loadPortfolios (portfolioUrl);   
         });
+
+        //Vider le formulaire après validation des données 
+        if (SubmitEvent){
+            resetFormFunction();
+        };
+        
     }catch (error) {
             console.error(error)
     }; 
