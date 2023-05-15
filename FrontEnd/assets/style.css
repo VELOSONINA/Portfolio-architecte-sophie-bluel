@@ -148,15 +148,20 @@ nav ul {
 nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
+	color: #1D6154;
+    font-weight: bold;
 	cursor: pointer;
 }
 
 nav a { 
 	text-decoration: none;
+	color: #1D6154;
+    font-weight: bold;
 }
 
 
-nav li:hover {
+nav li:hover,
+nav a:hover {
 	color: #B1663C;
 	font-weight: bold;
 }
@@ -317,7 +322,8 @@ hr {
 	color: white;
 	border: 1px solid #1D6154;
 	background-color: #1D6154;
-	padding: 15px 20px;
+	width: 239px;
+	height: 40px;
 }
 
 /*fomulaire modal*/
@@ -332,6 +338,10 @@ hr {
 	margin: 10px 0px 20px 0;
     border: none;
     box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+small {
+	font-size: 14px;
 }
 
 .label-fileInput {
@@ -350,7 +360,7 @@ hr {
 } 
 
 .img-content img {
-	width: 60%;
+	width: 239px;
 	object-fit: cover;
 }
 
@@ -408,7 +418,8 @@ hr {
 .form-modal input[type="submit"]{ 
 	border: 1px solid #b3b3b3!important;
 	background-color: #b3b3b3!important ;
-	padding: 15px 20px;
+	width: 239px;
+	height: 40px;
 }
 
 .form-modal hr {
@@ -513,12 +524,12 @@ input[type="submit"]{
 	text-align: center;
 }
 
-.message-password {
+.message-password,
+.msg-error {
 	color: red;
 	display: none;
 	padding-top: 10px;
 }
-
 
 footer nav ul {
 	display: flex;

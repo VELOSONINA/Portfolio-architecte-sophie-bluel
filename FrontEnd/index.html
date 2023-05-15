@@ -64,28 +64,30 @@
 					<h2 class="modal-one">Galerie photo</h2>
 					<h2 class="modal-two">Ajout photo</h2>
 					<i class="fa-solid fa-arrow-left modal-two"></i>
-					<span class="close hidden">x</span>
+					<span class="close">x</span>
 				</div>
 				<div class="modal-body">
 					<div class="modal-gallery modal-one"></div>	
 					<div class="form-modal modal-two">
 						<form action="#" method="post" id="form-works">
 							<div class="img-content">
-								<i class="fa-sharp fa-regular fa-image"></i>
-								<label for="fileInput" class="label-fileInput">+Ajouter photo</label>
-								<input type="file" id="fileInput"/>
-								<img id="preview">
-								<span>jpg, png : 4mo max</span>
+								<i class="fa-sharp fa-regular fa-image img-preview"></i>
+								<label for="fileInput" class="label-fileInput img-preview">+Ajouter photo</label>
+								<input type="file" id="fileInput">
+								<img id="preview" alt="">
+								<span class="img-preview">jpg, png : 4mo max</span>
 							</div>
+							<small class="msg-error">Veuillez choisir l'image svp !</small>
 							<label for="title">Titre</label>
 							<input type="text" name="title" id="title">
-							<span id="erreur"></span>
+							<small class="msg-error">Veuillez renseigner le titre svp !</small>
 							<label for="category">Catégorie</label>
 							<select name="category" id="categorie">
 								<option value="1">Objets</option>
 								<option value="2">Appartements</option>
 								<option value="3">Hôtels & restaurants</option>
 							</select>
+							<small class="msg-error">Veuillez renseigner les champs svp !</small>
 							<hr>
 							<input type="submit" value="valider">	
 						</form>

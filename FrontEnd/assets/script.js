@@ -199,22 +199,19 @@ function showModal(datasModal){
 
 async function deleteFigure(id){ 
 
-    let authToken = localStorage.getItem("token");
-    let response = await fetch(`http://localhost:5678/api/works/${id}`,{
-        method: 'DELETE',
-        headers: { 
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${authToken}`,
-        },
-    })
-    .then(data => {
-        console.log("figure supprimée");  
-    })
-    .catch (error => {
+    try {
+        let authToken = localStorage.getItem("token");
+        let response = await fetch(`http://localhost:5678/api/works/${id}`,{
+            method: 'DELETE',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${authToken}`,
+            },
+        });
+    }catch (error) {
         console.error(error);
-    });
+    };
 };
-
 
 //déclaration du variable pour l'ouverture du modal
 let openModal = document.getElementById("myBtn-modal");
@@ -227,7 +224,7 @@ openModal.onclick = function() {
 let closeModal = document.getElementsByClassName("close")[0];
 //fonction <span> (x), fermeture du modal
 closeModal.onclick = function() {
-   modal.style.display = "none";
+    modal.style.display = "none";
 };
 
 // fonction qui permet de fermer le modal quand on click à l'extérieur du modal
@@ -237,14 +234,17 @@ window.onclick = function(event) {
     }
 };
 
+//fonction clavier
 document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+    let modalClass = modal.classList;
+    if (e.key === "Escape" && !modalClass.contains("close")) {
         modal.style.display = "none";
     }
   });
 
 //Afficher la page pour ajouter une image quand on click sur le boutton ajouter une image dans modal
 let buttonDispModal = document.querySelector('.btn-change-content');
+
 buttonDispModal.addEventListener("click",function(e){ 
     e.preventDefault();
     
@@ -255,7 +255,7 @@ buttonDispModal.addEventListener("click",function(e){
     }else{
         showReloadModal("none", 'modal-one');
         showReloadModal("block", 'modal-two') 
-        resetFormFunction()
+        resetFormFunction();
     }  
 });
 
@@ -274,16 +274,10 @@ buttonArrowLeft.addEventListener("click",function(e){
     showReloadModal("grid", 'modal-one');
 });
 
-//fonction pour vider les champs dans le formulaire
-function resetFormFunction(){
-    let resetElement = document.getElementById("form-works");
-    preview.src = "";
-    resetElement.reset(); 
-}
-
-// changer le type d'évenement et de balise cible "fileInput" -> Form "change" -> "submit"
+//déclaration variable du formulaire du second modal
 let formSubmit = document.getElementById('form-works');
 
+//fonction pour envoyer les données du formulaire
 formSubmit.addEventListener("submit", sendPortfolio);
 
 async function sendPortfolio(event) {
@@ -294,10 +288,14 @@ async function sendPortfolio(event) {
     let formData = new FormData();
     let imageFile = fileInput.files[0];
 
+    if (!checkField(imageFile,title)) {
+        return;
+    }
+
     formData.append('image', imageFile);
     formData.append('title', title);
     formData.append('category', category);
-
+    
     let authToken = localStorage.getItem("token");
     try { 
         let response = await fetch(`http://localhost:5678/api/works`,{
@@ -311,23 +309,22 @@ async function sendPortfolio(event) {
         //Affiche l'image qui à était uploadé 
         // dans le modal et dans la page(les liste d'image)
         .then(data => {   
-            loadPortfolios (portfolioUrl);   
-        });
+            loadPortfolios (portfolioUrl);  
 
-        //Vider le formulaire après validation des données 
-        if (SubmitEvent){
-            resetFormFunction();
-        };
-        
+            //Vider le formulaire après validation des données
+            resetFormFunction(); 
+            alert('Formulaire envoyé');
+        });
     }catch (error) {
-            console.error(error)
+            alert(error);
     }; 
 }; 
 
-//fonction du bouton pour charger l'image
+//déclaration variables input image
 let fileInput = document.getElementById("fileInput");
 let preview = document.getElementById("preview");
 
+//fonction du bouton pour charger l'image
 fileInput.addEventListener("change", updateImageDisplay);
 
 function updateImageDisplay(e) {
@@ -336,18 +333,83 @@ function updateImageDisplay(e) {
     let file = fileInput.files[0];
     let reader = new FileReader();
 
-        reader.addEventListener("load", function() {
-            preview.src = reader.result;
-        });
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-			preview.src = "";
-		}
+    reader.addEventListener("load", function() {
+        preview.src = reader.result;
+    });
+    if (file) {
+        reader.readAsDataURL(file);
+        displayIconsButton();
+    }
 };
 
+function checkField(imageFile, title){
+    if (!title&&!imageFile) {
+        //afficher le message d'erreur
+        showErrorFields(message);
+        //cacher le message d'erreur
+        setTimeout(function() {
+            hideErrorFields();
+        }, 5000);
+        return false
+    } 
+    if (!imageFile){
+        showErrorFields(image,message);
+        setTimeout(function() {
+            hideErrorFields();
+        }, 5000);
+        return false
+    }
+    if (!title){
+        showErrorFields(title,message);
+        setTimeout(function() {
+            hideErrorFields();
+        }, 5000);
+        return false
+    }
+    // if (!title||!imageFile) {
+    //     alert('Veuillez renseigner les champs svp !');
+    //     return false;
+    // }
+    return true;
+}
 
+//fonction pour vider les champs dans le formulaire
+function resetFormFunction(){
+    preview.src = "";
+    formSubmit.reset();
+    displayUploadButton();
+}
 
+function displayIconsButton() {
+    let imagePreview = document.getElementsByClassName("img-preview");
+        
+        for (let i = 0; i < imagePreview.length; i++) {
+            imagePreview[i].style.display = "none";
+        }
+}
 
+function displayUploadButton() {
+    let imagePreview = document.getElementsByClassName("img-preview");
+        
+        for (let i = 0; i < imagePreview.length; i++) {
+            imagePreview[i].style.display = "initial";
+        }
+}
+
+//fonction pour afficher le message d'erreur dans le formulaire 
+function showErrorFields(){
+    let errorElement = document.getElementsByClassName("msg-error");
+    errorElement.innerText = message;
+    for (let i = 0; i < errorElement.length; i++) {
+        errorElement[i].style.display = "block";
+    }
+  }
+  //fonction pour cacher le message d'erreur dans le formulaire
+  function hideErrorFields(){
+    let errorElement = document.getElementsByClassName("msg-error");
+    for (let i = 0; i < errorElement.length; i++) {
+        errorElement[i].style.display = "none";
+    }
+  }
 
 
