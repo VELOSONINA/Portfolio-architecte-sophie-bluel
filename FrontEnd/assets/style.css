@@ -59,19 +59,6 @@ header {
 	justify-content: space-between;
 }
 
-.login-header {
-	display: flex;
-	flex-direction: unset;
-	justify-content: space-between;
-	margin: 50px 0
-}
-
-.article-edit {
-	display: flex;
-	justify-content: space-between;
-	margin: 50px 0
-}
-
 section {
 	margin: 50px 0
 }
@@ -100,6 +87,12 @@ h2{
 
 .mode-edition {
 	display: none;
+}
+
+.article-edit {
+	display: flex;
+	justify-content: space-between;
+	margin: 50px 0
 }
 
 .menu-edit {
@@ -149,14 +142,12 @@ nav li {
 	padding: 0 10px;
 	font-size: 1.2em;
 	color: #1D6154;
-    font-weight: bold;
 	cursor: pointer;
 }
 
 nav a { 
 	text-decoration: none;
 	color: #1D6154;
-    font-weight: bold;
 }
 
 
@@ -239,13 +230,19 @@ nav a:hover {
 	width: 100%;
 }
 
-/*boîte modal*/
+/*boîte modal_1*/
+.modal-one{
+	display: block;
+}
+
+/*boîte modal page_2*/
 .modal-two {
 	display: none;
 }
 
-.modal-one{
-	display: block;
+/*message modal*/
+.modal-message {
+	display: none;
 }
 
 .modal {
@@ -415,13 +412,6 @@ small {
   cursor: pointer;
 }
 
-.form-modal input[type="submit"]{ 
-	border: 1px solid #b3b3b3!important;
-	background-color: #b3b3b3!important ;
-	width: 239px;
-	height: 40px;
-}
-
 .form-modal hr {
     width: 100%;
     margin-top: 20px;
@@ -506,11 +496,15 @@ small {
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
+#contact input[type="submit"]{
+	background-color: #1D6154;
+}
+
 input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
-	background-color: #1D6154;
+	background-color: #b3b3b3;
 	margin : 2em auto ;
 	width: 180px;
 	text-align: center;
@@ -519,6 +513,12 @@ input[type="submit"]{
 }
 
 /*ajout de la page login*/
+.login-header {
+	display: flex;
+	flex-direction: unset;
+	justify-content: space-between;
+	margin: 50px 0
+}
 
 .password-forgot {
 	text-align: center;
@@ -531,18 +531,18 @@ input[type="submit"]{
 	padding-top: 10px;
 }
 
-footer nav ul {
-	display: flex;
-	justify-content: flex-end;
-	margin: 2em
-}
-
 .login-footer {
 	position: absolute;
 	bottom: 0;
 	right: 0;
 	padding-right: 13%;
 	padding-bottom: 20px;
+}
+
+footer nav ul {
+	display: flex;
+	justify-content: flex-end;
+	margin: 2em
 }
 
 

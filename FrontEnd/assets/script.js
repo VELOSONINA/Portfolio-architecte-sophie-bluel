@@ -1,4 +1,4 @@
-//appelde la fonction mode édition
+//appel de la fonction mode édition
 modeEdition();
 
 let portfolioUrl = 'http://localhost:5678/api/works';
@@ -22,7 +22,7 @@ function loadPortfolios (paramPortfolioUrl){
     filterPortfolio(portfolios);
     showModal(portfolios);
     });
-}
+};
 
 //gestion des filtres
 function filterPortfolio(datasCategories){ 
@@ -35,7 +35,7 @@ function clickEventFunction(e){
     let elementClicked = e.target;
     if(!elementClicked.classList.contains("btn-filter")){
         return;
-    }
+    };
 
     let objetsFilters;
     let datasCategories = e.currentTarget.portfoliosDatas;
@@ -43,7 +43,7 @@ function clickEventFunction(e){
     let btnClass1 = document.getElementsByClassName('btn-filter');
     for(let i = 0; i < btnClass1.length; i++){
         btnClass1[i].className = "btn-filter white-bgrd-btn";
-    }
+    };
 
     elementClicked.className = "btn-filter green-bgrd-btn"; 
     let filterName = elementClicked.dataset.filter;
@@ -67,11 +67,10 @@ function clickEventFunction(e){
            return datasCategories.category.name === "Hotels & restaurants";      
         });
     };
-   showPortfolio(objetsFilters);
-
+    showPortfolio(objetsFilters);
     };
     
-//Afficher les galeries
+//fonction pour afficher les galeries
 function showPortfolio(datas){
     let galleryContainer = document.getElementsByClassName("gallery");
     
@@ -95,7 +94,7 @@ function showPortfolio(datas){
         //rattacher figureElement à la galleryElement
         galleryContainer[0].appendChild(figureElement);
     };
-}   
+};   
 
 //fonction pour afficher le mode d'édition de la page
 function modeEdition(){
@@ -113,8 +112,8 @@ function modeEdition(){
     }else{
         showEditElement("none", 'mode-edition');
         showEditElement("block", 'mode-visitor')
-    }
-}
+    };
+};
 
 //Afficher la page de chargement ou le mode d'édition de la page
 function showEditElement(styleDisplay, paramClassName){
@@ -122,8 +121,8 @@ function showEditElement(styleDisplay, paramClassName){
 
     for (let i = 0; i < editsElements.length; i++) {
         editsElements[i].style.display = styleDisplay;
-    }
-}
+    };
+};
 
 // déclaration variable modal
 let modal = document.getElementById("myModal");
@@ -157,6 +156,7 @@ function showModal(datasModal){
 
         //selectionner une image
         iconTrash.dataset.workId = datasModal[i].id;
+
         //fonction pour supprimer une image
         iconTrash.addEventListener("click",onDelete); 
 
@@ -176,9 +176,9 @@ function showModal(datasModal){
                 counter--;
                 if(i == worksToDelete.length - 1) {
                     deleteFigure(id);
-                }
+                };
             };
-        }
+        };
     
         //rattacher les images à modalContent
         figureModal.appendChild(imagesModal);
@@ -197,8 +197,8 @@ function showModal(datasModal){
     };
 }; 
 
+//fonction pour recupérer id de l'élément à supprimer dans le backend
 async function deleteFigure(id){ 
-
     try {
         let authToken = localStorage.getItem("token");
         let response = await fetch(`http://localhost:5678/api/works/${id}`,{
@@ -231,10 +231,10 @@ closeModal.onclick = function() {
 window.onclick = function(event) {
     if (event.target == modal) {
     modal.style.display = "none";
-    }
+    };
 };
 
-//fonction clavier
+//fonction clavier 
 document.addEventListener("keydown", function (e) {
     let modalClass = modal.classList;
     if (e.key === "Escape" && !modalClass.contains("close")) {
@@ -251,19 +251,19 @@ buttonDispModal.addEventListener("click",function(e){
     let modalContent = document.getElementById(".modal-content");
     if (modalContent != null){
         showReloadModal("block", 'modal-one');
-        showReloadModal("none", 'mode-two')
+        showReloadModal("none", 'mode-two');
     }else{
         showReloadModal("none", 'modal-one');
-        showReloadModal("block", 'modal-two') 
+        showReloadModal("block", 'modal-two'); 
         resetFormFunction();
-    }  
+    }; 
 });
 
 function showReloadModal(styleDisplay, paramClassName){
     let reLoadElements = document.getElementsByClassName(paramClassName);
     for (let i = 0; i < reLoadElements.length; i++) {
         reLoadElements[i].style.display = styleDisplay;
-    }
+    };
 }; 
 
 //revenir sur le premier affichage du modal
@@ -273,6 +273,27 @@ buttonArrowLeft.addEventListener("click",function(e){
     showReloadModal("none", 'modal-two');
     showReloadModal("grid", 'modal-one');
 });
+
+//récuperer les catégories depuis backend
+let categoriesUrl = 'http://localhost:5678/api/categories';
+fetch(categoriesUrl)
+    .then(response => response.json())
+    .then(data => {
+        showCategories(data)
+});
+
+//fonction pour afficher les catégories
+function showCategories(datasCategories){
+    let select = document.getElementById('categorie');
+    
+    for (let i = 0; i < datasCategories.length; i++) {
+        let element = datasCategories[i];
+        let option = document.createElement('option');
+        option.value = element.id;
+        option.innerHTML = element.name;
+        select.appendChild(option);
+    };
+};
 
 //déclaration variable du formulaire du second modal
 let formSubmit = document.getElementById('form-works');
@@ -290,11 +311,13 @@ async function sendPortfolio(event) {
 
     if (!checkField(imageFile,title)) {
         return;
-    }
+    };
 
     formData.append('image', imageFile);
     formData.append('title', title);
     formData.append('category', category);
+
+    changeBkgrdColorOfButton(imageFile, title);
     
     let authToken = localStorage.getItem("token");
     try { 
@@ -305,18 +328,16 @@ async function sendPortfolio(event) {
             },  
             body: formData,
         })
-        
-        //Affiche l'image qui à était uploadé 
-        // dans le modal et dans la page(les liste d'image)
         .then(data => {   
+            //Affiche l'image qui à était uploadé 
+            // dans le modal et dans la page(les liste d'image)
             loadPortfolios (portfolioUrl);  
 
             //Vider le formulaire après validation des données
-            resetFormFunction(); 
-            alert('Formulaire envoyé');
+            resetFormFunction();              
         });
     }catch (error) {
-            alert(error);
+        alert(error);
     }; 
 }; 
 
@@ -338,78 +359,85 @@ function updateImageDisplay(e) {
     });
     if (file) {
         reader.readAsDataURL(file);
-        displayIconsButton();
-    }
+        hideImagesContent();
+    };
 };
 
+//fonction pour verifier les champs du formulaire 
 function checkField(imageFile, title){
-    if (!title&&!imageFile) {
+    let errorElement = document.getElementsByClassName("msg-error");
+    if (!title || !imageFile) {
         //afficher le message d'erreur
-        showErrorFields(message);
+        if (!imageFile){
+            errorElement[0].style.display = "block";
+        };
+        if (!title){
+            errorElement[1].style.display = "block";
+        };
+        if (!title && !imageFile){
+            errorElement[2].style.display = "block";
+        };
+
         //cacher le message d'erreur
         setTimeout(function() {
             hideErrorFields();
         }, 5000);
         return false
-    } 
-    if (!imageFile){
-        showErrorFields(image,message);
-        setTimeout(function() {
-            hideErrorFields();
-        }, 5000);
-        return false
-    }
-    if (!title){
-        showErrorFields(title,message);
-        setTimeout(function() {
-            hideErrorFields();
-        }, 5000);
-        return false
-    }
-    // if (!title||!imageFile) {
-    //     alert('Veuillez renseigner les champs svp !');
-    //     return false;
-    // }
+    }; 
     return true;
-}
+};
 
 //fonction pour vider les champs dans le formulaire
 function resetFormFunction(){
+    setTimeout(() => {
+        sendButton.style.background = "#b3b3b3";
+    }, 3000);  
     preview.src = "";
     formSubmit.reset();
     displayUploadButton();
-}
+    //validateFormMessage();
+};
 
-function displayIconsButton() {
-    let imagePreview = document.getElementsByClassName("img-preview");
-        
-        for (let i = 0; i < imagePreview.length; i++) {
-            imagePreview[i].style.display = "none";
-        }
-}
+//déclaration variable qui contient la classe img-preview
+let imagePreview = document.getElementsByClassName("img-preview");
 
+//fonction pour cacher les éléments dans la classe img-content 
+//au moment où on affiche l'image 
+function hideImagesContent() {        
+    for (let i = 0; i < imagePreview.length; i++) {
+        imagePreview[i].style.display = "none";
+    };
+};
+
+//fonction pour initialiser le formulaire après validation
 function displayUploadButton() {
-    let imagePreview = document.getElementsByClassName("img-preview");
-        
-        for (let i = 0; i < imagePreview.length; i++) {
-            imagePreview[i].style.display = "initial";
-        }
-}
+    for (let i = 0; i < imagePreview.length; i++) {
+        imagePreview[i].style.display = "initial";
+    };
+};
 
-//fonction pour afficher le message d'erreur dans le formulaire 
-function showErrorFields(){
+//fonction pour cacher le message d'erreur dans le formulaire
+function hideErrorFields(){
     let errorElement = document.getElementsByClassName("msg-error");
-    errorElement.innerText = message;
-    for (let i = 0; i < errorElement.length; i++) {
-        errorElement[i].style.display = "block";
-    }
-  }
-  //fonction pour cacher le message d'erreur dans le formulaire
-  function hideErrorFields(){
-    let errorElement = document.getElementsByClassName("msg-error");
+
     for (let i = 0; i < errorElement.length; i++) {
         errorElement[i].style.display = "none";
-    }
-  }
+    };
+};
+
+
+//fonction pour changer la couleur du bouton si les conditions sont remplis
+function changeBkgrdColorOfButton(imageFile, title) {
+    //déclaration variable du boutton submit
+    let sendButton = document.getElementById("sendButton");
+
+    if(imageFile && title){
+        sendButton.style.background = "#1D6154";
+    }else{
+        sendButton.style.background = "#b3b3b3";
+    };
+};
+
+
 
 
