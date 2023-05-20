@@ -164,20 +164,17 @@ function showModal(datasModal){
             event.preventDefault()
             let id = event.target.dataset.workId; 
             let worksToDelete = document.getElementsByClassName("work-to-delete-" + id);
-                
+ 
             let counter = worksToDelete.length;
-            let msg = confirm("Etes vous sûr de vouloir supprimé ?");
             for (let i=0; i <= worksToDelete.length; i++) {
-                
-                if(msg == false){
-                    break
-                }  
+                 
                 worksToDelete[counter-1].remove();
                 counter--;
                 if(i == worksToDelete.length - 1) {
                     deleteFigure(id);
                 };
             };
+            showMessageOnClick("message-delete");
         };
     
         //rattacher les images à modalContent
@@ -199,6 +196,7 @@ function showModal(datasModal){
 
 //fonction pour recupérer id de l'élément à supprimer dans le backend
 async function deleteFigure(id){ 
+
     try {
         let authToken = localStorage.getItem("token");
         let response = await fetch(`http://localhost:5678/api/works/${id}`,{
@@ -228,10 +226,10 @@ closeModal.onclick = function() {
 };
 
 // fonction qui permet de fermer le modal quand on click à l'extérieur du modal
-window.onclick = function(event) {
-    if (event.target == modal) {
-    modal.style.display = "none";
-    };
+ window.onclick = function(event) {
+     if (event.target == modal) {
+     modal.style.display = "none";
+     };
 };
 
 //fonction clavier 
@@ -334,10 +332,11 @@ async function sendPortfolio(event) {
             loadPortfolios (portfolioUrl);  
 
             //Vider le formulaire après validation des données
-            resetFormFunction();              
+            showMessageOnClick("message-send"); 
+            resetFormFunction();          
         });
     }catch (error) {
-        alert(error);
+        console.error(error);
     }; 
 }; 
 
@@ -359,7 +358,7 @@ function updateImageDisplay(e) {
     });
     if (file) {
         reader.readAsDataURL(file);
-        hideImagesContent();
+        displayUploadButton("none");
     };
 };
 
@@ -381,7 +380,7 @@ function checkField(imageFile, title){
         //cacher le message d'erreur
         setTimeout(function() {
             hideErrorFields();
-        }, 5000);
+        }, 1000);
         return false
     }; 
     return true;
@@ -391,28 +390,20 @@ function checkField(imageFile, title){
 function resetFormFunction(){
     setTimeout(() => {
         sendButton.style.background = "#b3b3b3";
-    }, 3000);  
+    }, 2000);  
     preview.src = "";
     formSubmit.reset();
-    displayUploadButton();
-    //validateFormMessage();
+    displayUploadButton("initial");
 };
 
 //déclaration variable qui contient la classe img-preview
 let imagePreview = document.getElementsByClassName("img-preview");
 
-//fonction pour cacher les éléments dans la classe img-content 
-//au moment où on affiche l'image 
-function hideImagesContent() {        
+//fonction pour cacher le formulaire avant validation 
+//et initialiser le formulaire après validation
+function displayUploadButton(displayStringPreview) {        
     for (let i = 0; i < imagePreview.length; i++) {
-        imagePreview[i].style.display = "none";
-    };
-};
-
-//fonction pour initialiser le formulaire après validation
-function displayUploadButton() {
-    for (let i = 0; i < imagePreview.length; i++) {
-        imagePreview[i].style.display = "initial";
+        imagePreview[i].style.display = displayStringPreview;
     };
 };
 
@@ -424,7 +415,6 @@ function hideErrorFields(){
         errorElement[i].style.display = "none";
     };
 };
-
 
 //fonction pour changer la couleur du bouton si les conditions sont remplis
 function changeBkgrdColorOfButton(imageFile, title) {
@@ -438,6 +428,13 @@ function changeBkgrdColorOfButton(imageFile, title) {
     };
 };
 
+//fonction afficher messages confirmation quand supprimer et valider
+function showMessageOnClick(messageDisplay) {
 
-
+    let messageModalSelect = document.getElementById(messageDisplay);
+    messageModalSelect.style.display = "block";
+    setTimeout(() => {
+        messageModalSelect.style.display = "none";
+    }, 2000);
+}
 
