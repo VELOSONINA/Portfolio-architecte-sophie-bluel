@@ -196,7 +196,6 @@ function showModal(datasModal){
 
 //fonction pour recupérer id de l'élément à supprimer dans le backend
 async function deleteFigure(id){ 
-
     try {
         let authToken = localStorage.getItem("token");
         let response = await fetch(`http://localhost:5678/api/works/${id}`,{
@@ -218,14 +217,15 @@ openModal.onclick = function() {
     modal.style.display = "block";
 };
 
-// déclaration variable pour la fermeture du modal
+//déclaration variable pour la fermeture du modal
 let closeModal = document.getElementsByClassName("close")[0];
 //fonction <span> (x), fermeture du modal
 closeModal.onclick = function() {
     modal.style.display = "none";
 };
 
-// fonction qui permet de fermer le modal quand on click à l'extérieur du modal
+//fonction qui permet de fermer le modal 
+//quand on click à l'extérieur du modal
  window.onclick = function(event) {
      if (event.target == modal) {
      modal.style.display = "none";
@@ -240,7 +240,8 @@ document.addEventListener("keydown", function (e) {
     }
   });
 
-//Afficher la page pour ajouter une image quand on click sur le boutton ajouter une image dans modal
+//Afficher la page pour ajouter une image 
+//quand on click sur le boutton ajouter une image dans modal
 let buttonDispModal = document.querySelector('.btn-change-content');
 
 buttonDispModal.addEventListener("click",function(e){ 
