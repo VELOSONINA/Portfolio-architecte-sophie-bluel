@@ -9,12 +9,14 @@ window.onload = function () {
     let eMail = document.getElementById("email").value;
     
     //appel fonction changement de couleur si conditions remplis
-    changeTheColorOfButton(eMail,password);
+    if (!checkMailAndPassword(eMail,password)){
+      showMessageError("block");
+      return ;
+    };
 
     let urlLogin = 'http://localhost:5678/api/users/login';
 
     fetch(urlLogin, {
-    
       method: 'POST',
       headers: {
         Accept: "application/json",
@@ -27,17 +29,16 @@ window.onload = function () {
     })
     .then((response) => response.json())
     .then((data) => {
+
       if (data.error || data.message) {
         //afficher le message d'erreur
-        showMessageError();
-        //cacher le message d'erreur
-        setTimeout(function() {
-          hideMessageError();
-        }, 5000);
-        //Appel fonction changement de couleur bouton en cas d'erreur 
-        changeTheBkgdColorIfError(eMail,password);
+        showMessageError("block");
+        //Appel fonction changement de couleur bouton gris 
+        changeTheBkgdColor("#b3b3b3");
 
       } else {
+        //Appel fonction changement de couleur bouton vert
+        changeTheBkgdColor("#1D6154");
         //enregistrer le token
         window.localStorage.setItem('token',data.token)
         window.location.replace("index.html"); 
@@ -46,30 +47,29 @@ window.onload = function () {
   });
 
   //fonction pour afficher le message d'erreur
-  function showMessageError(){
+  //fonction pour afficher le message d'erreur
+  function showMessageError(displayString){
     let messageElement = document.getElementsByClassName("message-password");
-    messageElement[0].style.display = "block";
-  };
-  //fonction pour cacher le message d'erreur
-  function hideMessageError(){
-    let messageElement = document.getElementsByClassName("message-password");
-    messageElement[0].style.display = "none";
+    messageElement[0].style.display = displayString;
+    //cacher le message d'erreur
+    setTimeout(function() {
+      messageElement[0].style.display = "none";
+    }, 1000);
   };
 
-  //fonction pour changer la couleur du bouton si les conditions sont remplis
-  function changeTheColorOfButton(eMail,password) {
+
+  //fonction changer la couleur du bouton si les conditions sont remplis,
+  //en vert ("#1D6154") ou gris ("#b3b3b3")
+  function checkMailAndPassword(eMail,password) {
     if(eMail && password){
-      buttonConnexion.style.background = "#1D6154";
-    }else{
-      buttonConnexion.style.background = "#b3b3b3";
-    }
+      return true;
+    };
+    return false
   };
 
   //fonction pour changer la couleur bouton en cas d'erreur 
-  function changeTheBkgdColorIfError(eMail,password) {
-    if(eMail && password){
-      buttonConnexion.style.background = "#b3b3b3";
-    }
+  function changeTheBkgdColor(backgroundColor) {
+    buttonConnexion.style.background = backgroundColor;
   };
 };
 
