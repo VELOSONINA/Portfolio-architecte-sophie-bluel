@@ -228,6 +228,7 @@ nav a:hover {
 
 .gallery img {
 	width: 100%;
+	height: 430px;
 }
 
 /*boîte modal_1*/
@@ -246,7 +247,7 @@ nav a:hover {
 }
 
 .modal-message p{
-	color: red;
+	color: #1D6154;
     font-size: small!important;
 	padding-bottom: 30px!important;
 }
@@ -260,16 +261,12 @@ nav a:hover {
 	width: 100%; 
 	height: 100%; 
 	margin-top: auto;
-	overflow: auto;  
+	overflow: scroll;  
 	background-color: rgba(0,0,0,0.4);
 }
 
 /* contenu du modal */
 .modal-content {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
 	background-color: #fefefe; 
 	padding: 40px 40px 0 40px;
 	border: 1px solid #b3b3b3;
@@ -277,7 +274,6 @@ nav a:hover {
 	width: 30%; 
 	text-align: center;
 	margin: 10% auto;
-	/* overflow: hidden; */
 }
 
 .modal-header h2 {
@@ -298,7 +294,12 @@ nav a:hover {
 
 .modal-content img {
 	width: 100%;
+	height: 100px;
 	object-fit: cover;
+}
+
+img[src=""] {
+    display: none;
 }
 
 .modal-gallery i {
@@ -352,6 +353,7 @@ small {
 
 .img-content img {
 	width: 239px;
+	height:239px ;
 	object-fit: cover;
 }
 
@@ -360,10 +362,9 @@ small {
     flex-direction: column;
 	justify-content: center;
     align-items: center;
-    padding: 20px 0;
     width: 100%;
 	margin: auto;
-    height: 200px;
+    height: 239px;
     background-color: #E8F1F6;
 	overflow: hidden;
 }
@@ -406,8 +407,10 @@ small {
 }
 /*footer modal*/
 .modal-footer {
-	text-align: center;
-	text-align: -webkit-center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 }
 
 .sup-gallery {

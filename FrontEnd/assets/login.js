@@ -54,7 +54,7 @@ window.onload = function () {
     //cacher le message d'erreur
     setTimeout(function() {
       messageElement[0].style.display = "none";
-    }, 1000);
+    }, 4000);
   };
 
 

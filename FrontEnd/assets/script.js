@@ -5,22 +5,22 @@ let portfolioUrl = 'http://localhost:5678/api/works';
 loadPortfolios (portfolioUrl);
 
 function loadPortfolios (paramPortfolioUrl){
-    //récuperer des galerie depuis backend
+    //récuperer de la galerie depuis backend
     fetch(paramPortfolioUrl)
         .then(response => response.json())
         .then(portfolios => {
 
-    //affiche les boutons en blanc
-    let btnClass = document.getElementsByClassName('btn-filter');
-    for(let i =0; i < btnClass.length; i++){
-        btnClass[i].className = "btn-filter white-bgrd-btn";
-    }
-    //affiche le premier bouton en vert
-    btnClass[0].className = "btn-filter green-bgrd-btn";
+        //affiche les boutons en blanc
+        let btnClass = document.getElementsByClassName('btn-filter');
+        for(let i =0; i < btnClass.length; i++){
+            btnClass[i].className = "btn-filter white-bgrd-btn";
+        }
+        //affiche le premier bouton en vert
+        btnClass[0].className = "btn-filter green-bgrd-btn";
 
-    showPortfolio(portfolios);
-    filterPortfolio(portfolios);
-    showModal(portfolios);
+        showPortfolio(portfolios);
+        filterPortfolio(portfolios);
+        initModal(portfolios);
     });
 };
 
@@ -107,9 +107,11 @@ function modeEdition(){
     //récuperation du token et stocker dans localstorage
     let isLoged = localStorage.getItem("token");
     if (isLoged != null){
+        //mode édition
         showEditElement("block", 'mode-edition');
         showEditElement("none", 'mode-visitor')
     }else{
+        //mode visiteur
         showEditElement("none", 'mode-edition');
         showEditElement("block", 'mode-visitor')
     };
@@ -119,7 +121,7 @@ function modeEdition(){
 function showEditElement(styleDisplay, paramClassName){
     let editsElements = document.getElementsByClassName(paramClassName);
 
-    for (let i = 0; i < editsElements.length; i++) {
+    for (let i = 0; i < editsElements.length; i++){
         editsElements[i].style.display = styleDisplay;
     };
 };
@@ -127,12 +129,12 @@ function showEditElement(styleDisplay, paramClassName){
 // déclaration variable modal
 let modal = document.getElementById("myModal");
 
-let galleryModal = document.getElementsByClassName("modal-gallery");
 let iconArrows = document.createElement('i');
 
 //fonction pour afficher les elements dans le modal
-function showModal(datasModal){  
+function initModal(datasModal){  
    
+    let galleryModal = document.getElementsByClassName("modal-gallery");
     //ajouter l'icone flèches dans le premier élémént
     iconArrows.classList.add("fa-solid", "fa-arrows-up-down-left-right");
     
@@ -166,11 +168,11 @@ function showModal(datasModal){
             let worksToDelete = document.getElementsByClassName("work-to-delete-" + id);
  
             let counter = worksToDelete.length;
-            for (let i=0; i <= worksToDelete.length; i++) {
+            for (let i=0; i <= worksToDelete.length; i++){
                  
                 worksToDelete[counter-1].remove();
                 counter--;
-                if(i == worksToDelete.length - 1) {
+                if(i == worksToDelete.length - 1){
                     deleteFigure(id);
                 };
             };
@@ -212,30 +214,33 @@ async function deleteFigure(id){
 
 //déclaration du variable pour l'ouverture du modal
 let openModal = document.getElementById("myBtn-modal");
+
 // fontion pour ouvrir le modal
-openModal.onclick = function() {
+openModal.onclick = function(){
     modal.style.display = "block";
+    document.body.style.overflow = "hidden";
 };
 
 //déclaration variable pour la fermeture du modal
 let closeModal = document.getElementsByClassName("close")[0];
 //fonction <span> (x), fermeture du modal
-closeModal.onclick = function() {
+closeModal.onclick = function(){
     modal.style.display = "none";
+    document.body.style.overflow = "initial";
 };
 
 //fonction qui permet de fermer le modal 
 //quand on click à l'extérieur du modal
- window.onclick = function(event) {
+ window.onclick = function(event){
      if (event.target == modal) {
      modal.style.display = "none";
      };
 };
 
 //fonction clavier 
-document.addEventListener("keydown", function (e) {
+document.addEventListener("keydown", function(e){
     let modalClass = modal.classList;
-    if (e.key === "Escape" && !modalClass.contains("close")) {
+    if (e.key === "Escape" && !modalClass.contains("close")){
         modal.style.display = "none";
     }
   });
@@ -366,7 +371,7 @@ function updateImageDisplay(e) {
 //fonction pour verifier les champs du formulaire 
 function checkField(imageFile, title){
     let errorElement = document.getElementsByClassName("msg-error");
-    if (!title || !imageFile) {
+    if (!title || !imageFile){
         //afficher le message d'erreur
         if (!imageFile){
             errorElement[0].style.display = "block";
@@ -379,9 +384,9 @@ function checkField(imageFile, title){
         };
 
         //cacher le message d'erreur
-        setTimeout(function() {
+        setTimeout(function(){
             hideErrorFields();
-        }, 1000);
+        }, 4000);
         return false
     }; 
     return true;
@@ -391,7 +396,7 @@ function checkField(imageFile, title){
 function resetFormFunction(){
     setTimeout(() => {
         sendButton.style.background = "#b3b3b3";
-    }, 2000);  
+    }, 3000);  
     preview.src = "";
     formSubmit.reset();
     displayUploadButton("initial");
@@ -402,7 +407,7 @@ let imagePreview = document.getElementsByClassName("img-preview");
 
 //fonction pour cacher le formulaire avant validation 
 //et initialiser le formulaire après validation
-function displayUploadButton(displayStringPreview) {        
+function displayUploadButton(displayStringPreview){        
     for (let i = 0; i < imagePreview.length; i++) {
         imagePreview[i].style.display = displayStringPreview;
     };
@@ -430,12 +435,12 @@ function changeBkgrdColorOfButton(imageFile, title) {
 };
 
 //fonction afficher messages confirmation quand supprimer et valider
-function showMessageOnClick(messageDisplay) {
+function showMessageOnClick(messageDisplay){
 
     let messageModalSelect = document.getElementById(messageDisplay);
     messageModalSelect.style.display = "block";
     setTimeout(() => {
         messageModalSelect.style.display = "none";
-    }, 2000);
+    }, 4000);
 }
 
